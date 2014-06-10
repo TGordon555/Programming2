@@ -7,6 +7,7 @@ public class Game extends Applet implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		//this is a test, please ignore
+		//NO
 	}
 
 }
