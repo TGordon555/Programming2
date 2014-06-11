@@ -1,4 +1,6 @@
 import java.applet.Applet;
+import java.awt.Event;
+import java.awt.Graphics;
 
 
 public class Base extends Applet implements Runnable{
