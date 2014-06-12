@@ -11,17 +11,19 @@ public class Character {
 	 * height is in tiles
 	 * location is in tiles
 	 */
-	int _height; 
-	Location _characterLoc;
-	BufferedImage sprite;
+	private int _height; 
+	private Location _characterLoc;
+	private BufferedImage sprite;
 	
 	public Character(int height, Location loc){
 		_height = height;
 		_characterLoc = loc;
 		try {
-			BufferedImage sprite = ImageIO.read(new File( "character.png" ));
+			sprite = ImageIO.read(new File( "character.png" ));
+			System.out.println("found file");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Can't find file");
 			e.printStackTrace();
 		}
 	}

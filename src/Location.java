@@ -5,7 +5,7 @@ public class Location {
 	 * location is defined as the lowest tile a character or object has, in tiles
 	 */
 	
-	int _verticalLoc, _horizontalLoc;
+	private int _verticalLoc, _horizontalLoc;
 	
 	public Location(int verticalLoc, int horizontalLoc){
 		_verticalLoc = verticalLoc;

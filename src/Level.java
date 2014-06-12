@@ -9,10 +9,10 @@ public class Level {
 	 * Name is the level name, may be shown to the player
 	 * Levels store what characters are within it
 	 */
-	int _tileLength;
-	String _name;
+	private int _tileLength;
+	private String _name;
 	
-	ArrayList<Character> _characters;
+	private ArrayList<Character> _characters;
 	
 	public Level(int tileLength, String name){
 		_name = name;
