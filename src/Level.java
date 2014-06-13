@@ -59,8 +59,9 @@ public class Level {
 	}
 	
 	public void moveCharacterTo(Character c, Location newLoc){
-		if(!isOccupied(newLoc))
+		if(!isOccupied(newLoc) && newLoc.getVertical() > -1 && newLoc.getVertical() <= _tileLength){
 			_characters.get(_characters.indexOf(c)).setLocation(newLoc);
+		}
 	}
 	
 }

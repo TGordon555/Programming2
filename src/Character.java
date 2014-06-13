@@ -40,6 +40,10 @@ public class Character {
 		_characterLoc = newLoc;
 	}
 	
+	public void setHeight(int height){
+		_height = height;
+	}
+	
 	public BufferedImage getSprite(){
 		return sprite;
 	}

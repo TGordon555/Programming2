@@ -12,7 +12,9 @@ public class Base extends Applet implements Runnable{
 	private String _message = "";
 	private Character _mainCharacter = new Character(1, new Location(1, 2));
 	private Level _level1 = new Level(15, "Sunshine Beach");
-	private int _scale;
+	private int _scale, _jumpTime = 500;
+	private boolean _jumping = false, _falling = false;
+	private long _jumpStart, _timeSinceJump;
 	
 	public void init(){
 		_level1.addCharacter(_mainCharacter);
@@ -25,6 +27,19 @@ public class Base extends Applet implements Runnable{
 		// TODO Auto-generated method stub
 		while(true){
 			_scale = getHeight()/10;
+			_timeSinceJump = System.currentTimeMillis() - _jumpStart;
+			if(_jumping){
+				 if(_timeSinceJump >= _jumpTime){
+					 _jumping = false;
+					_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(1);
+				 }else{
+					 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
+					 if(_timeSinceJump >= _jumpTime/2){
+						 _falling = true;
+						 System.out.println("falling");
+					 }
+				 }
+			}
 			repaint();
 			try{
                 t.sleep(1000/30);
@@ -34,8 +49,30 @@ public class Base extends Applet implements Runnable{
 	
 	public boolean keyDown(Event e, int key){
 		_message = "Value: " + key;
-		if(key == 100){
-			_level1.moveCharacterTo(_mainCharacter, new Location(_mainCharacter.getLocation().getVertical(), _mainCharacter.getLocation().getHorizontal() + 1));
+		System.out.println((_mainCharacter.getLocation().getHorizontal() - 1) * _scale);
+		switch (key) {
+		case 100:
+			if((_mainCharacter.getLocation().getHorizontal() - 1) * _scale <= getWidth()){
+				_level1.moveCharacterTo(_mainCharacter, new Location(_mainCharacter.getLocation().getVertical(), _mainCharacter.getLocation().getHorizontal() + 1));
+			}
+			break;
+
+		case 97:
+			if((_mainCharacter.getLocation().getHorizontal()) * _scale > -1){
+				_level1.moveCharacterTo(_mainCharacter, new Location(_mainCharacter.getLocation().getVertical(), _mainCharacter.getLocation().getHorizontal() - 1));
+			}
+			
+		default:
+			break;
+		}
+		
+		return true;
+	}
+	public boolean keyUp(Event e, int key){
+		if(key == 32){
+			_jumping  = true;
+			_jumpStart = System.currentTimeMillis();
+			_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(2);
 		}
 		return true;
 	}
@@ -49,17 +86,19 @@ public class Base extends Applet implements Runnable{
 			//System.out.println("Have a character");
 			//System.out.println(c.getLocation().getHorizontal()* _scale + " " + getWidth());
 			//System.out.println(getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) + " " + getHeight());
-			System.out.println(c.getSprite().getHeight(null) + " " + c.getSprite().getWidth(null));
-			g.drawImage(c.getSprite(), c.getLocation().getHorizontal()* _scale, getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale), new ImageObserver() {
-				
-				@Override
-				public boolean imageUpdate(Image img, int infoflags, int x, int y,
-						int width, int height) {
-					System.out.println("Update");
-					// TODO Auto-generated method stub
-					return false;
+			//System.out.println(c.getSprite().getHeight(null) + " " + c.getSprite().getWidth(null));
+			/**
+			 * Jumping may be a little crazy, and not at all smooth
+			 */
+			if(_jumping){
+				if(!_falling){
+					g.drawImage(c.getSprite(), c.getLocation().getHorizontal() * _scale,  (int) (getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) - (_timeSinceJump / _jumpTime)* 2 * _scale), null);
+				}else{
+					g.drawImage(c.getSprite(), c.getLocation().getHorizontal() * _scale,  (int) (getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) - (_jumpTime / _timeSinceJump) * _scale), null);
 				}
-			});
+			}else{
+				g.drawImage(c.getSprite(), c.getLocation().getHorizontal()* _scale, getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale), null);
+			}
 		}
 	}
 
