@@ -10,9 +10,9 @@ public class Base extends Applet implements Runnable{
 
 	private Thread t;
 	private String _message = "";
-	private Character _mainCharacter = new Character(1, new Location(1, 2));
+	private Character _mainCharacter = new Character(1, new Location(1, 2), 3);
 	private Level _level1 = new Level(15, "Sunshine Beach");
-	private int _scale, _jumpTime = 500;
+	private int _scale, _jumpTime = 500; //This time is in milliseconds
 	private boolean _jumping = false, _falling = false;
 	private long _jumpStart, _timeSinceJump;
 	
@@ -93,12 +93,12 @@ public class Base extends Applet implements Runnable{
 			 */
 			if(_jumping){
 				if(!_falling){
-					g.drawImage(c.getSprite(), c.getLocation().getHorizontal() * _scale,  (int) (getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) - (_timeSinceJump / _jumpTime)* 2 * _scale), null);
+					g.drawImage(c.getSprite(), c.getLocation().getHorizontal() * _scale,  (int) (getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) - (_timeSinceJump / _jumpTime)* c.getJumpHeight() * _scale), null);
 				}else{
 					g.drawImage(c.getSprite(), c.getLocation().getHorizontal() * _scale,  (int) (getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) - (_jumpTime / _timeSinceJump) * _scale), null);
 				}
 			}else{
-				g.drawImage(c.getSprite(), c.getLocation().getHorizontal()* _scale, getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale), null);
+				g.drawImage(c.getSprite(), c.getLocation().getHorizontal()* _scale, getHeight() * 9/10 - c.getSprite().getHeight(), null);
 			}
 		}
 	}
