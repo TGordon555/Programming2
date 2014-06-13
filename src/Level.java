@@ -11,6 +11,7 @@ public class Level {
 	 */
 	private int _tileLength;
 	private String _name;
+	//private Base _base = new Base();
 	
 	private ArrayList<Character> _characters;
 	
@@ -59,7 +60,9 @@ public class Level {
 	}
 	
 	public void moveCharacterTo(Character c, Location newLoc){
-		if(!isOccupied(newLoc) && newLoc.getVertical() > -1 && newLoc.getVertical() <= _tileLength){
+		//System.out.println(newLoc.get);
+		//Only left bounded currently
+		if(!isOccupied(newLoc) && newLoc.getHorizontal() > -1){
 			_characters.get(_characters.indexOf(c)).setLocation(newLoc);
 		}
 	}

@@ -34,10 +34,10 @@ public class Base extends Applet implements Runnable{
 					 _falling = false;
 					_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(1);
 				 }else{
-					 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
+				//	 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
 					 if(_timeSinceJump >= _jumpTime/2){
 						 _falling = true;
-						 System.out.println("falling");
+						 //System.out.println("falling");
 					 }
 				 }
 			}
@@ -101,6 +101,14 @@ public class Base extends Applet implements Runnable{
 				g.drawImage(c.getSprite(), c.getLocation().getHorizontal()* _scale, getHeight() * 9/10 - c.getSprite().getHeight(), null);
 			}
 		}
+	}
+	
+	public int getWidth(){
+		return getWidth();
+	}
+	
+	public int getScale(){
+		return _scale;
 	}
 
 }
