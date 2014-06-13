@@ -31,6 +31,7 @@ public class Base extends Applet implements Runnable{
 			if(_jumping){
 				 if(_timeSinceJump >= _jumpTime){
 					 _jumping = false;
+					 _falling = false;
 					_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(1);
 				 }else{
 					 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
