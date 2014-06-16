@@ -58,6 +58,20 @@ public class Character {
 		}
 	}
 	
+	public Character(int height, Location loc, int jumpHeight, int spriteIndex){
+		_height = height;
+		_jumpHeight = jumpHeight;
+		_characterLoc = loc;
+		try {
+			sprite = ImageIO.read(new File( spriteIndex == 0 ? "character.png" : "character2.gif" ));
+			System.out.println("found file");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Can't find file");
+			e.printStackTrace();
+		}
+	}
+	
 	public int getHeight(){
 		return _height;
 	}

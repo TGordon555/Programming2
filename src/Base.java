@@ -11,10 +11,12 @@ public class Base extends Applet implements Runnable{
 	private Thread t;
 	private String _message = "";
 	private Character _mainCharacter = new Character(1, new Location(1, 2), 3);
+			//_secondCharacter = new Character(1, new Location(1,4), 3, 1);
 	private Level _level1 = new Level(15, "Sunshine Beach");
 	private int _scale, _jumpTime = 500; //This time is in milliseconds
 	private boolean _jumping = false, _falling = false;
 	private long _jumpStart, _timeSinceJump;
+	private int _mainCharOrigHeight = 1;
 	
 	public void init(){
 		_level1.addCharacter(_mainCharacter);
@@ -34,7 +36,7 @@ public class Base extends Applet implements Runnable{
 				 if(_timeSinceJump >= _jumpTime){
 					 _jumping = false;
 					 _falling = false;
-					_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(1);
+					_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(_mainCharOrigHeight);
 				 }else{
 				//	 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
 					 if(_timeSinceJump >= _jumpTime/2){
@@ -75,7 +77,7 @@ public class Base extends Applet implements Runnable{
 		if(key == 32){
 			_jumping  = true;
 			_jumpStart = System.currentTimeMillis();
-			_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(2);
+			_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(_mainCharOrigHeight + 1);
 		}
 		return true;
 	}
