@@ -10,7 +10,7 @@ public class Base extends Applet implements Runnable{
 
 	private Thread t;
 	private String _message = "";
-	private Character _mainCharacter = new Character(1, new Location(1, 2), 3);
+	private Character _mainCharacter = new Character(1, new Location(1, 2), 1);
 	private Level _level1 = new Level(15, "Sunshine Beach");
 	private int _scale, _jumpTime = 500; //This time is in milliseconds
 	private boolean _jumping = false, _falling = false;
