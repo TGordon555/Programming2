@@ -9,7 +9,7 @@ public class Level {
 	 * Name is the level name, may be shown to the player
 	 * Levels store what characters are within it
 	 */
-	private int _tileLength;
+	private int _tileLength, _appletWidth = 0, _scale = 0;
 	private String _name;
 	
 	private ArrayList<Character> _characters;
@@ -37,6 +37,14 @@ public class Level {
 		return _tileLength;
 	}
 	
+	public void setWidth(int newWidth){
+		_appletWidth = newWidth;
+	}
+	
+	public void setScale(int newScale){
+		_scale = newScale;
+	}
+	
 	public ArrayList<Character> getCharacterList(){
 		return _characters;
 	}
@@ -59,7 +67,8 @@ public class Level {
 	}
 	
 	public void moveCharacterTo(Character c, Location newLoc){
-		if(!isOccupied(newLoc) && newLoc.getVertical() > -1 && newLoc.getVertical() <= _tileLength){
+		//System.out.println(newLoc.get);
+		if(!isOccupied(newLoc) && newLoc.getHorizontal() > -1 && newLoc.getHorizontal() * _scale < _appletWidth){
 			_characters.get(_characters.indexOf(c)).setLocation(newLoc);
 		}
 	}

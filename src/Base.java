@@ -27,6 +27,8 @@ public class Base extends Applet implements Runnable{
 		// TODO Auto-generated method stub
 		while(true){
 			_scale = getHeight()/10;
+			_level1.setScale(_scale);
+			_level1.setWidth(getWidth());
 			_timeSinceJump = System.currentTimeMillis() - _jumpStart;
 			if(_jumping){
 				 if(_timeSinceJump >= _jumpTime){
@@ -34,10 +36,10 @@ public class Base extends Applet implements Runnable{
 					 _falling = false;
 					_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(1);
 				 }else{
-					 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
+				//	 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
 					 if(_timeSinceJump >= _jumpTime/2){
 						 _falling = true;
-						 System.out.println("falling");
+						 //System.out.println("falling");
 					 }
 				 }
 			}
@@ -50,7 +52,7 @@ public class Base extends Applet implements Runnable{
 	
 	public boolean keyDown(Event e, int key){
 		_message = "Value: " + key;
-		System.out.println((_mainCharacter.getLocation().getHorizontal() - 1) * _scale);
+	//	System.out.println((_mainCharacter.getLocation().getHorizontal() - 1) * _scale);
 		switch (key) {
 		case 100:
 			if((_mainCharacter.getLocation().getHorizontal() - 1) * _scale <= getWidth()){
