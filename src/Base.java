@@ -13,7 +13,7 @@ public class Base extends Applet implements Runnable{
 	private Character _mainCharacter = new Character(1, new Location(1, 2), 3), _secondCharacter = new Character(1, new Location(1,4), 3, 1);
 	private Level _level1 = new Level(15, "Sunshine Beach");
 	private int _scale, _jumpTime = 500; //This time is in milliseconds
-	private boolean _jumping = false, _falling = false;
+	private boolean _jumpingCharOne = false, _fallingCharOne = false, _jumpingCharTwo = false, _fallingCharTwo = false;
 	private long _jumpStart, _timeSinceJump;
 	private int _mainCharOrigHeight = 1;
 	
@@ -32,15 +32,28 @@ public class Base extends Applet implements Runnable{
 			_level1.setScale(_scale);
 			_level1.setWidth(getWidth());
 			_timeSinceJump = System.currentTimeMillis() - _jumpStart;
-			if(_jumping){
+			if(_jumpingCharOne){
 				 if(_timeSinceJump >= _jumpTime){
-					 _jumping = false;
-					 _falling = false;
+					 _jumpingCharOne = false;
+					 _fallingCharOne = false;
 					 _level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(_mainCharOrigHeight);
 				 }else{
 				//	 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
 					 if(_timeSinceJump >= _jumpTime/2){
-						 _falling = true;
+						 _fallingCharOne = true;
+						 //System.out.println("falling");
+					 }
+				 }
+			}
+			if(_jumpingCharTwo){
+				 if(_timeSinceJump >= _jumpTime){
+					 _jumpingCharTwo = false;
+					 _fallingCharTwo = false;
+					 _level1.getCharacterAt(_secondCharacter.getLocation()).setHeight(_mainCharOrigHeight);
+				 }else{
+				//	 System.out.println(_timeSinceJump + " " + _jumpTime + "\n");
+					 if(_timeSinceJump >= _jumpTime/2){
+						 _fallingCharTwo = true;
 						 //System.out.println("falling");
 					 }
 				 }
@@ -66,6 +79,19 @@ public class Base extends Applet implements Runnable{
 			if((_mainCharacter.getLocation().getHorizontal()) * _scale > -1){
 				_level1.moveCharacterTo(_mainCharacter, new Location(_mainCharacter.getLocation().getVertical(), _mainCharacter.getLocation().getHorizontal() - 1));
 			}
+			break;
+			
+		case 1007:
+			if((_secondCharacter.getLocation().getHorizontal() - 1) * _scale <= getWidth()){
+				_level1.moveCharacterTo(_secondCharacter, new Location(_secondCharacter.getLocation().getVertical(), _secondCharacter.getLocation().getHorizontal() + 1));
+			}
+			break;
+			
+		case 1006:
+			if((_secondCharacter.getLocation().getHorizontal()) * _scale > -1){
+				_level1.moveCharacterTo(_secondCharacter, new Location(_secondCharacter.getLocation().getVertical(), _secondCharacter.getLocation().getHorizontal() - 1));
+			}
+			break;
 			
 		default:
 			break;
@@ -75,9 +101,15 @@ public class Base extends Applet implements Runnable{
 	}
 	public boolean keyUp(Event e, int key){
 		if(key == 32){
-			_jumping  = true;
+			_jumpingCharOne  = true;
 			_jumpStart = System.currentTimeMillis();
 			_level1.getCharacterAt(_mainCharacter.getLocation()).setHeight(_mainCharOrigHeight + 1);
+		}else{
+			if(key == 1004){
+				_jumpingCharTwo  = true;
+				_jumpStart = System.currentTimeMillis();
+				_level1.getCharacterAt(_secondCharacter.getLocation()).setHeight(_mainCharOrigHeight + 1);
+			}
 		}
 		return true;
 	}
@@ -95,8 +127,8 @@ public class Base extends Applet implements Runnable{
 			/**
 			 * Jumping may be a little crazy, and not at all smooth
 			 */
-			if(_jumping){
-				if(!_falling){
+			if(_jumpingCharOne || _jumpingCharTwo){
+				if(!_fallingCharOne || _fallingCharTwo){
 					g.drawImage(c.getSprite(), c.getLocation().getHorizontal() * _scale,  (int) (getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) - (_timeSinceJump / _jumpTime)* c.getJumpHeight() * _scale), null);
 				}else{
 					g.drawImage(c.getSprite(), c.getLocation().getHorizontal() * _scale,  (int) (getHeight() - ((c.getLocation().getVertical() + c.getHeight()) * _scale) - (_jumpTime / _timeSinceJump) * _scale), null);
@@ -104,6 +136,7 @@ public class Base extends Applet implements Runnable{
 			}else{
 				g.drawImage(c.getSprite(), c.getLocation().getHorizontal()* _scale, getHeight() * 9/10 - c.getSprite().getHeight(), null);
 			}
+			
 		}
 	}
 
